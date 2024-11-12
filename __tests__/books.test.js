@@ -1,6 +1,6 @@
-const request = require("supertest"), app = require("../app"), db = require("../db");
-
 process.env.NODE_ENV = "test" //overrides .env
+
+const request = require("supertest"), app = require("../app"), db = require("../db");
 
 let bookIsbn;
 
