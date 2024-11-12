@@ -1,14 +1,17 @@
 /** Database config for database. */
 
-
 const { Client } = require("pg");
-const {DB_URI} = require("./config");
+const { DB_URI, PASSWORD } = require("./config");
 
-let db = new Client({
-  connectionString: DB_URI
-});
+const db = new Client({
+  user: 'postgres',
+  host: 'localhost',
+  database: DB_URI,
+  password: PASSWORD,
+  port: 5432
+}
+)
 
 db.connect();
-
 
 module.exports = db;
