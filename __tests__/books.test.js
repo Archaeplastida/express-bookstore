@@ -44,14 +44,14 @@ describe("GET /books", () => {
     test("Gets a list, containing a single book.", async () => {
         const response = await request(app).get("/books"), books = response.body.books, properties = ["isbn", "amazon_url", "author", "language", "pages", "publisher", "title", "year"];
         expect(books).toHaveLength(1);
-        for(let property of properties) expect(books[0]).toHaveProperty(property);
+        for (let property of properties) expect(books[0]).toHaveProperty(property);
     })
 })
 
 describe("GET /books/:isbn", () => {
     test("Gets a book by isbn.", async () => {
         const response = await request(app).get(`/books/${bookIsbn}`), book = response.body.book, properties = ["isbn", "amazon_url", "author", "language", "pages", "publisher", "title", "year"];
-        for(let property of properties) expect(book).toHaveProperty(property);
+        for (let property of properties) expect(book).toHaveProperty(property);
     })
 
     test("Responsds 404 if ISBN isn't found.", async () => {
