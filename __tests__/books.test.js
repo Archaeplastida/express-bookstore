@@ -47,3 +47,15 @@ describe("GET /books", () => {
         for(let property of properties) expect(books[0]).toHaveProperty(property);
     })
 })
+
+describe("GET /books/:isbn", () => {
+    test("Gets a book by isbn.", async () => {
+        const response = await request(app).get(`/books/${bookIsbn}`), book = response.body.book, properties = ["isbn", "amazon_url", "author", "language", "pages", "publisher", "title", "year"];
+        for(let property of properties) expect(book).toHaveProperty(property);
+    })
+
+    test("Responsds 404 if ISBN isn't found.", async () => {
+        const response = await request(app).get("/books/293858");
+        expect(response.statusCode).toBe(404);
+    })
+})
