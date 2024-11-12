@@ -54,7 +54,7 @@ describe("GET /books/:isbn", () => {
         for (let property of properties) expect(book).toHaveProperty(property);
     })
 
-    test("Responsds 404 if ISBN isn't found.", async () => {
+    test("Responds 404 if ISBN isn't found.", async () => {
         const response = await request(app).get("/books/293858");
         expect(response.statusCode).toBe(404);
     })
@@ -66,7 +66,7 @@ describe("DELETE /books/:isbn", () => {
         expect(response.body).toEqual({ message: "Book deleted" });
     })
 
-    test("Responsds 404 if ISBN isn't found.", async () => {
+    test("Responds 404 if ISBN isn't found.", async () => {
         const response = await request(app).delete("/books/293858");
         expect(response.statusCode).toBe(404);
     })
