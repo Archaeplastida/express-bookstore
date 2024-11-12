@@ -1,4 +1,4 @@
-const express = require("express"), Book = require("../models/book"), router = new express.Router(), { validate } = require("jsonschema"), bookNew = require("../schemas/bookNew.json");
+const express = require("express"), Book = require("../models/book"), router = new express.Router(), { validate } = require("jsonschema"), bookNew = require("../schemas/bookNew.json"), bookUpdate = require("../schemas/bookUpdate.json");
 
 
 /** GET / => {books: [book, ...]}  */
@@ -40,6 +40,9 @@ router.post("/", async function (req, res, next) {
 
 router.put("/:isbn", async function (req, res, next) {
   try {
+    if ("isbn" in req.body) return next({ status: 401, message: "Cannot change ISBN." });
+    const validation = validate(req.body, bookUpdate);
+    if (!validation.valid) return next({ status: 400, error: validation.errors.map(e => e.stack) });
     const book = await Book.update(req.params.isbn, req.body);
     return res.json({ book });
   } catch (err) {
