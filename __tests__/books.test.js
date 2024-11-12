@@ -39,3 +39,11 @@ describe("PUT /books/:isbn", () => {
         expect(response.statusCode).toBe(401);
     })
 })
+
+describe("GET /books", () => {
+    test("Gets a list, containing a single book.", async () => {
+        const response = await request(app).get("/books"), books = response.body.books, properties = ["isbn", "amazon_url", "author", "language", "pages", "publisher", "title", "year"];
+        expect(books).toHaveLength(1);
+        for(let property of properties) expect(books[0]).toHaveProperty(property);
+    })
+})
