@@ -59,3 +59,15 @@ describe("GET /books/:isbn", () => {
         expect(response.statusCode).toBe(404);
     })
 })
+
+describe("DELETE /books/:isbn", () => {
+    test("Deletes a book by isbn.", async () => {
+        const response = await request(app).delete(`/books/${bookIsbn}`);
+        expect(response.body).toEqual({message: "Book deleted"});
+    })
+
+    test("Responsds 404 if ISBN isn't found.", async () => {
+        const response = await request(app).delete("/books/293858");
+        expect(response.statusCode).toBe(404);
+    })
+})
