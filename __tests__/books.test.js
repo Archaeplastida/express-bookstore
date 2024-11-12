@@ -25,3 +25,17 @@ describe("POST /books", () => {
         expect(response.statusCode).toBe(400);
     })
 })
+
+describe("PUT /books/:isbn", () => {
+    test("Updates a book.", async () => {
+        const response = await request(app).put(`/books/${bookIsbn}`).send({ amazon_url: 'https://abookstore.com/a-real-book', author: "I'm the author now!", language: "English", pages: 999, publisher: "I'm the publisher now.", title: "A test book", year: 1999 });
+        expect(response.body.book).toHaveProperty("isbn");
+        expect(response.body.book.author).toBe("I'm the author now!");
+        expect(response.body.book.publisher).toBe("I'm the publisher now.");
+    })
+
+    test("Doesn't allow the attempt of an ISBN change.", async () => {
+        const response = await request(app).put(`/books/${bookIsbn}`).send({ isbn: "2938539283", amazon_url: 'https://abookstore.com/a-real-book', author: "I'm the author now!", language: "English", pages: 999, publisher: "I'm the publisher now.", title: "A test book", year: 1999 });
+        expect(response.statusCode).toBe(401);
+    })
+})
